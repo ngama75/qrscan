@@ -1,0 +1,23 @@
+{
+  "name": "qrscan",
+  "version": "1.0.0",
+  "description": "scanner de certificats",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ngama75/qrscan.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ngama75/qrscan/issues"
+  },
+  "homepage": "https://github.com/ngama75/qrscan#readme",
+  "devDependencies": {
+    "@11ty/eleventy": "^1.0.0",
+    "jsqr": "^1.4.0"
+  }
+}
