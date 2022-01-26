@@ -1,0 +1,39 @@
+---
+layout: base.njk
+---
+<h1>jsQR Demo</h1>
+  <textarea id="output" rows="6" cols="50"></textarea>
+  <video id="video" style="width: 640px; height: 480px"></video>
+  <canvas id="canvas" hidden></canvas>
+  <script src="/lib/jsQR.js"></script>
+  <script>
+    var video = document.getElementById("video");
+    var canvasElement = document.getElementById("canvas");
+    var canvas = canvasElement.getContext("2d");
+    var output = document.getElementById("output");
+
+    // Use facingMode: environment to attemt to get the front camera on phones
+    navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } }).then(function(stream) {
+      video.srcObject = stream;
+      video.setAttribute("playsinline", true); // required to tell iOS safari we don't want fullscreen
+      video.play();
+      setTimeout(tick,300);
+    });
+
+    function tick() {
+      if (video.readyState === video.HAVE_ENOUGH_DATA) {
+        canvasElement.height = video.videoHeight;
+        canvasElement.width = video.videoWidth;
+        canvas.drawImage(video, 0, 0, canvasElement.width, canvasElement.height);
+        var imageData = canvas.getImageData(0, 0, canvasElement.width, canvasElement.height);
+        var code = jsQR(imageData.data, imageData.width, imageData.height, {
+          inversionAttempts: "dontInvert",
+        });
+        if (code) {
+          output.innerText = code.data;
+	  console.log(code);
+        }
+      }
+      setTimeout(tick,300);
+    }
+  </script>
